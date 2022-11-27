@@ -37,6 +37,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= base_url('booking') ?>" style="color: #F7C114;">Pesanan</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url('payment') ?>">Pembayaran</a>
+                            </li>
                         <?php } ?>
                     </ul>
                     <ul class="navbar-nav mt-2 mt-lg-0">
@@ -96,13 +99,13 @@
                             <div class="col-sm-4">
                                 <h5>Jenis Pemesanan</h5>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="0" checked>
+                                    <input class="form-check-input" type="radio" onclick="functionPerorangan()" name="exampleRadios" id="exampleRadios1" value="0" checked>
                                     <label class="form-check-label" for="exampleRadios1">
                                         Perorangan
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="1">
+                                    <input class="form-check-input" type="radio" onclick="functionKelompok()" name="exampleRadios" id="exampleRadios2" value="1">
                                     <label class="form-check-label" for="exampleRadios2">
                                         Kelompok
                                     </label>
@@ -110,7 +113,7 @@
                                 <div class="input-jumlah mt-4">
                                     <h6>Jumlah Peserta</h6>
                                     <div class="form-group">
-                                        <input type="text" onkeypress="return onlyNumber(event)" required class="form-control jumlah" onkeyup="myFunction()" id="jumlah" name="jumlah" value="1">
+                                        <input type="text" onkeypress="return onlyNumber(event)" readonly required class="form-control jumlah" onkeyup="myFunction()" id="jumlah" name="jumlah" value="1">
                                     </div>
                                 </div>
                                 <div class="row mt-4">
@@ -131,6 +134,27 @@
                                             <input type="hidden" name="harga" id="harga" value="<?= $row['paket_harga'] ?>">
                                         </div>
                                     </div>
+                                </div>
+                                <h5 class="mt-4">Metode Pembayaran</h5>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" onclick="functionLunas()" name="metodepembayaran" id="metodepembayaran1" value="0" checked>
+                                    <label class="form-check-label" for="metodepembayaran1">
+                                        Lunas
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" onclick="functionCicilan()" name="metodepembayaran" id="metodepembayaran2" value="1">
+                                    <label class="form-check-label" for="metodepembayaran2">
+                                        Cicilan
+                                    </label>
+                                </div>
+                                <div class="mt-4">
+                                    <select name="tenor" id="tenor" class="form-control">
+                                        <option value="2">2 Kali Cicil</option>
+                                        <option value="3">3 Kali Cicil</option>
+                                        <option value="4">4 Kali Cicil</option>
+                                        <option value="5">5 Kali Cicil</option>
+                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary mb-4 mt-4">Pesan Sekarang</button>
                             </div>
@@ -223,6 +247,27 @@
 
     <script>
         let totalharga = 0;
+
+        $('#tenor').hide();
+
+        function functionLunas() {
+            $('#tenor').hide();
+        }
+
+        function functionCicilan() {
+            $('#tenor').show();
+        }
+
+        function functionPerorangan() {
+            $('#jumlah').prop('readonly', true);
+            $('#jumlah').val(1);
+            myFunction()
+        }
+
+        function functionKelompok() {
+            $('#jumlah').prop('readonly', false);
+            myFunction()
+        }
 
         function myFunction() {
             let jumlah = $('#jumlah').val()

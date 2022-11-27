@@ -66,51 +66,49 @@
             foreach ($jamaah as $row) : $no++ ?>
                 <tr style="height: 30px;">
                     <td width="150px" style="padding-left: 10px;">NIK</td>
-                    <td style="padding-left: 10px;"><?= $row['document_nik']; ?></td>
+                    <td style="padding-left: 10px;"><strong><?= $row['document_nik']; ?></strong></td>
                 </tr>
                 <tr style="height: 30px;">
                     <td style="padding-left: 10px;">Nama</td>
-                    <td style="padding-left: 10px;"><?= $row['document_nama']; ?></td>
+                    <td style="padding-left: 10px;"><strong><?= $row['document_nama']; ?></strong></td>
                 </tr>
                 <tr style="height: 30px;">
                     <td style="padding-left: 10px;">Alamat</td>
                     <td style="padding-left: 10px;">
-
-                        <?= $row['document_alamat']; ?>
-
+                        <strong><?= $row['document_alamat']; ?></strong>
                     </td>
                 </tr>
                 <tr style="height: 30px;">
                     <td style="padding-left: 10px;">Tempat Tanggal Lahir</td>
                     <td style="padding-left: 10px;">
-
-                        <?= $row['document_tempat_lahir']; ?>,
-                        <?= $row['document_tgl_lahir']; ?>
-
+                        <strong>
+                            <?= $row['document_tempat_lahir']; ?>,
+                            <?= $row['document_tgl_lahir']; ?>
+                        </strong>
                     </td>
                 </tr>
                 <tr style="height: 30px;">
                     <td style="padding-left: 10px;">No. Telp</td>
                     <td style="padding-left: 10px;">
-                        <?= $row['document_notelp']; ?>
+                        <strong><?= $row['document_notelp']; ?></strong>
                     </td>
                 </tr>
                 <tr style="height: 30px;">
                     <td style="padding-left: 10px;">Jenis Kelamin</td>
                     <td style="padding-left: 10px;">
-                        <?= $row['document_kelamin'] == 0 ? 'Perempuan' : 'Laki-Laki' ?>
+                        <strong> <?= $row['document_kelamin'] == 0 ? 'Perempuan' : 'Laki-Laki' ?></strong>
                     </td>
                 </tr>
                 <tr style="height: 30px;">
                     <td style="padding-left: 10px;">No. Passport</td>
                     <td style="padding-left: 10px;">
-                        <?= $row['document_no_paspor']; ?>
+                        <strong><?= $row['document_no_paspor']; ?></strong>
                     </td>
                 </tr>
                 <tr style="height: 30px;">
                     <td style="padding-left: 10px;">Tgl Berlaku</td>
                     <td style="padding-left: 10px;">
-                        <?= $row['document_tgl_berlaku']; ?>
+                        <strong><?= $row['document_tgl_berlaku']; ?></strong>
                     </td>
                 </tr>
                 <tr>

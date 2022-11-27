@@ -35,6 +35,9 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="<?= base_url('booking') ?>" style="color: #F7C114;">Pesanan</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url('payment') ?>">Pembayaran</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav mt-2 mt-lg-0">
                         <?php if (session()->get('pesertaId')) { ?>
@@ -66,11 +69,15 @@
                     <input type="hidden" name="idtransaksi" id="idtransaksi" value="<?= $nomorbooking; ?>">
                     <input type="hidden" name="urut" id="urut" value="<?= $urut; ?>">
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="nik">NIK <sup>*</sup></label>
                             <input type="text" onkeypress="return onlyNumber(event)" required class="form-control" id="nik" name="nik" placeholder="137100xxxxxxx *">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
+                            <label for="nama">NAMA <sup>*</sup></label>
+                            <input type="text" required class="form-control" id="nama" name="nama" placeholder="Jhon Dxxx *">
+                        </div>
+                        <div class="form-group col-md-4">
                             <label for="notelp">NO. TELP <sup>*</sup></label>
                             <input type="text" onkeypress="return onlyNumber(event)" required class="form-control" id="notelp" name="notelp" placeholder="0821xxxxxxx *">
                         </div>
@@ -101,7 +108,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="passport">NO. PASSPORT <sup>*</sup></label>
-                            <input type="text" required class="form-control" id="passport" name="passport" placeholder="11341xxxxxx *">
+                            <input type="text" required onkeypress="return onlyNumber(event)" class="form-control" id="passport" name="passport" placeholder="11341xxxxxx *">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="tglpassport">TANGGAL BERLAKU <sup>*</sup></label>

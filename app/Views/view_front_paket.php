@@ -5,13 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Zafa Tour Padang</title>
+    <title>About - Zafa Tour Padang</title>
     <link rel="stylesheet" href="<?= base_url() ?>/assets-front/vendors/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>/assets-front/css/style.css">
     <link rel="shortcut icon" href="<?= base_url(); ?>/assets/images/logo.png">
 </head>
 
 <body>
+    <?php
+    if (session()->getFlashdata('message')) { ?>
+        <div class="alert alert-danger" style="position: fixed; bottom: 0; right: 0; margin: 50px;">
+            <?= session()->getFlashdata('message') ?>
+        </div>
+    <?php } ?>
+    <?php if (session()->getFlashdata('success')) { ?>
+        <div class="alert alert-success" style="position: fixed; bottom: 0; right: 0; margin: 50px;">
+            <?= session()->getFlashdata('success') ?>
+        </div>
+    <?php } ?>
     <header class="foi-header">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light foi-navbar">
@@ -30,7 +41,7 @@
                             <a class="nav-link" href="<?= base_url('about') ?>">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('paket') ?>">Paket</a>
+                            <a class="nav-link" href="<?= base_url('paket') ?>" style="color: #F7C114;">Paket</a>
                         </li>
                         <?php if (session()->get('pesertaId')) { ?>
                             <li class="nav-item">
@@ -60,47 +71,42 @@
         </div>
     </header>
 
-    <main class="page-auth">
+    <main class="page-about">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <section class="auth-wrapper">
-                        <?php
-                        if (session()->getFlashdata('message')) { ?>
-                            <div class="alert alert-danger mb-4">
-                                <?= session()->getFlashdata('message') ?>
+            <section class="page-header">
+                <h1>Paket</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb foi-breadcrumb">
+                        <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Paket</li>
+                    </ol>
+                </nav>
+            </section>
+            <section class="mb-5">
+                <h2>Paket Umroh Zafa Tour</h2>
+                <p class="text-muted mb-5">Beberapa pilihan paket ibadah umroh Zafa Tour
+                    Pilih paketnya dan kami temani Anda menuju rumah Allah </p>
+                <div class="row">
+                    <?php
+                    foreach ($paket as $row) : ?>
+                        <?php $totalTanggal = strtotime(date('Y-m-d', strtotime($row['paket_tgl_mulai']))) - strtotime(date('Y-m-d', strtotime($tanggal))) ?>
+                        <?php $days = $totalTanggal / 86400; ?>
+                        <?php if ($days > 60) { ?>
+                            <div class="col-lg-4 mb-4">
+                                <div class="card pricing-card border-primary active">
+                                    <div class="card-body">
+                                        <h3><?= $row['paket_nama'] ?></h3>
+                                        <h3 class="text-primary"><?= "Rp. " . number_format($row['paket_harga'], 0, ',', '.') ?></h3>
+                                        <p class="payment-period">Kuota <?= $row['paket_kuota'] ?></p>
+                                        <p class="mb-4"><?= date('d M Y', strtotime($row['paket_tgl_mulai'])) ?> s/d <?= date('d M Y', strtotime($row['paket_tgl_selesai'])) ?></p>
+                                        <button class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#detailPaket<?= $row['paket_id']; ?>">Detail</button>
+                                    </div>
+                                </div>
                             </div>
                         <?php } ?>
-                        <div class="row">
-                            <div class="col-md-6 mb-4 mb-md-0">
-                                <h2 class="auth-section-title">Create account</h2>
-                                <p class="auth-section-subtitle">Create your account to continue.</p>
-                                <form action="<?= base_url('register') ?>" method="POST">
-                                    <div class="form-group">
-                                        <label for="email">Email <sup>*</sup></label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">Name <sup>*</sup></label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Password <sup>*</sup></label>
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                                    </div>
-                                    <button class="btn btn-primary btn-auth-submit" type="submit">Create account</button>
-                                </form>
-                                <p class="mb-0">
-                                    <a href="<?= base_url('login') ?>" class="text-dark font-weight-bold">Already have an acocunt? Sign in</a>
-                                </p>
-                            </div>
-                            <div class="col-md-6 d-flex align-items-center">
-                                <img src="<?= base_url() ?>/assets-front/images/register.png" alt="login" class="img-fluid">
-                            </div>
-                        </div>
-                    </section>
+                    <?php endforeach; ?>
                 </div>
-            </div>
+            </section>
         </div>
     </main>
 

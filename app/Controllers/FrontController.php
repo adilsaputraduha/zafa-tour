@@ -28,6 +28,17 @@ class FrontController extends BaseController
 		return view('view_front', $data);
 	}
 
+	public function paket()
+	{
+		$model = new PaketModel();
+		date_default_timezone_set('Asia/Jakarta');
+		$data = [
+			'paket' => $model->getPaket()->getResultArray(),
+			'tanggal' => date("Y-m-d"),
+		];
+		return view('view_front_paket', $data);
+	}
+
 	public function login()
 	{
 		return view('view_front_login');
@@ -137,6 +148,13 @@ class FrontController extends BaseController
 
 	public function bookingEdit()
 	{
+		$tenorCicil = '';
+		if ($this->request->getPost('metodepembayaran') == 0) {
+			$tenorCicil = 1;
+		} else {
+			$tenorCicil = $this->request->getPost('tenor');
+		}
+
 		$model = new FrontModel();
 		$nomor = $this->request->getPost('invoice');
 
@@ -145,6 +163,8 @@ class FrontController extends BaseController
 			'booking_jumlah' => $this->request->getPost('jumlah'),
 			'booking_total' => $this->request->getPost('total'),
 			'booking_status' => 1,
+			'booking_metode' => $this->request->getPost('metodepembayaran'),
+			'booking_tenor' => $tenorCicil
 		);
 		$model->bookingEdit($data, $nomor);
 		session()->setFlashdata('success', 'Berhasil membuat order');
@@ -238,7 +258,8 @@ class FrontController extends BaseController
 		$model = new DocumentModel();
 		$data = array(
 			'document_nik' => $this->request->getPost('nik'),
-			'document_booking' => $this->request->getPost('id'),
+			'document_nama' => $this->request->getPost('nama'),
+			'document_booking' => $id,
 			'document_alamat' =>  $this->request->getPost('alamat'),
 			'document_tempat_lahir' => $this->request->getPost('tempat'),
 			'document_tgl_lahir' => $this->request->getPost('tgllahir'),
@@ -288,6 +309,7 @@ class FrontController extends BaseController
 		$model = new DocumentModel();
 		$data = array(
 			'document_nik' => $this->request->getPost('nik'),
+			'document_nama' => $this->request->getPost('nama'),
 			'document_alamat' =>  $this->request->getPost('alamat'),
 			'document_tempat_lahir' => $this->request->getPost('tempat'),
 			'document_tgl_lahir' => $this->request->getPost('tgllahir'),

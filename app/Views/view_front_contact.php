@@ -32,9 +32,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url('paket') ?>">Paket</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="<?= base_url('booking') ?>">Pesanan</a>
-                        </li>
+                        <?php if (session()->get('pesertaId')) { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url('booking') ?>">Pesanan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url('payment') ?>">Pembayaran</a>
+                            </li>
+                        <?php } ?>
                     </ul>
                     <ul class="navbar-nav mt-2 mt-lg-0">
                         <?php if (session()->get('pesertaId')) { ?>

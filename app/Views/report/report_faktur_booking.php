@@ -61,7 +61,7 @@
                 <td>Faktur Booking</td>
             </tr>
         </table>
-        <table class="head" style="margin-bottom: 20px;">
+        <table class="head" width="700" style="margin-bottom: 20px;">
             <?php $no = 0;
             foreach ($booking as $row) : $no++ ?>
                 <tr>
@@ -107,7 +107,7 @@
                 foreach ($booking as $row) : $no++ ?>
                     <tr style="height: 20px; text-align: center;">
                         <td> <?= $row['paket_nama']; ?></td>
-                        <td> <?= $row['paket_harga']; ?></td>
+                        <td> <?= 'Rp ' . number_format($row['paket_harga']) ?></td>
                         <td>
                             <?php if ($row['booking_jenis'] == 0) { ?>
                                 Perorangan
@@ -116,10 +116,23 @@
                             <?php } ?>
                         </td>
                         <td> <?= $row['booking_jumlah']; ?></td>
-                        <td>Rp. <?= $row['booking_total']; ?></td>
+                        <td> <?= 'Rp ' . number_format($row['booking_total']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
+        </table>
+        <table class="head" width="700" style="margin-bottom: 20px; margin-top: 30px;">
+            <?php $no = 0;
+            foreach ($booking as $row) : $no++ ?>
+                <tr>
+                    <td width="10%">Tanggal Keberangkatan</td>
+                    <td width="20%"><strong><?= date('d M Y', strtotime($row['paket_tgl_mulai'])) ?></strong></td>
+                </tr>
+                <tr>
+                    <td width="10%">Tanggal Selesai</td>
+                    <td width="20%"><strong><?= date('d M Y', strtotime($row['paket_tgl_selesai'])) ?></strong></td>
+                </tr>
+            <?php endforeach; ?>
         </table>
         <table width="700" style="margin-top: 30px;">
             <tr style="text-align: right !important;">

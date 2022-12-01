@@ -188,6 +188,71 @@
             </div>
         </div>
     </footer>
+
+    <?php foreach ($paket as $row) : ?>
+        <form action="<?= base_url('booking/save') ?>" method="POST">
+            <div id="detailPaket<?= $row['paket_id']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="">Detail paket</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <input type="hidden" value="<?= $row['paket_id']; ?>" id="idpaket" name="idpaket">
+                                    <h5><?= $row['paket_nama']; ?></h5>
+                                    <h6><?= "Rp. " . number_format($row['paket_harga'], 0, ',', '.') ?></h6>
+                                    <p class="mt-4"><?= $row['paket_deskripsi']; ?></p>
+                                    <span class="badge badge-warning p-2 mb-4"><?= date('d M Y', strtotime($row['paket_tgl_mulai'])) ?></span> s/d <span class="badge badge-warning p-2"><?= date('d M Y', strtotime($row['paket_tgl_selesai'])) ?></span>
+                                    <h6>Fasilitas</h6>
+                                    <?php
+                                    $db = db_connect();
+                                    $queryeksekusi = 'SELECT fasilitas_nama FROM tb_detail_fasilitas JOIN tb_fasilitas ON fasilitas_id = detail_fasilitas JOIN tb_paket ON detail_paket = paket_session WHERE detail_paket = ' . $row['paket_session'] . ' GROUP BY detail_id';
+                                    $detail = $db->query($queryeksekusi)
+                                    ?>
+                                    <?php foreach ($detail->getResultArray() as $rowdua) : ?>
+                                        <div class="">- <?= $rowdua['fasilitas_nama']; ?></div>
+                                    <?php endforeach; ?>
+                                    <h6 class="mt-2">Persyaratan</h6>
+                                    <?php
+                                    $db = db_connect();
+                                    $queryeksekusi = 'SELECT syarat_nama FROM tb_detail_syarat JOIN tb_syarat ON syarat_id = detail_syarat JOIN tb_paket ON detail_paket = paket_session WHERE detail_paket = ' . $row['paket_session'] . ' GROUP BY detail_id';
+                                    $detail = $db->query($queryeksekusi)
+                                    ?>
+                                    <?php foreach ($detail->getResultArray() as $rowdua) : ?>
+                                        <div class="">- <?= $rowdua['syarat_nama']; ?></div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <div class="col-sm-4">
+
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-sm-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" required type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Saya menyetujui syarat dan ketentuan dan kebijakan privasi yang berlaku
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-primary">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <?php endforeach; ?>
+
     <script src="<?= base_url() ?>/assets-front/vendors/jquery/jquery.min.js"></script>
     <script src="<?= base_url() ?>/assets-front/vendors/popper.js/popper.min.js"></script>
     <script src="<?= base_url() ?>/assets-front/vendors/bootstrap/dist/js/bootstrap.min.js"></script>

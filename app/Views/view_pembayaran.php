@@ -195,13 +195,24 @@
                             <td>Rp. <?= $row['booking_total']; ?></td>
                             <td>
                                 <?php if ($row['pembayaran_bayar'] == 0) { ?>
-                                    DP (30%)
-                                <?php } else { ?>
+                                    DP (10%)
+                                <?php } else if ($row['pembayaran_bayar'] == 1) { ?>
                                     Lunas
-                                <?php } ?>
+                                <?php } else { ?>
+                                    Cicilan
+                                <?php }  ?>
                             </td>
                             <td style="text-align: center;">
-                                <a type="button" class="badge bg-success" href="<?= base_url('admin/pemesanan/faktur/' . $row['booking_nomor']); ?>" target="__blank">Faktur</a>
+                                <?php if ($row['pembayaran_isverif'] < 2) { ?>
+                                    <?php if ($row['pembayaran_bayar'] < 2) { ?>
+                                        <a type="button" class="badge bg-warning" data-toggle="modal" data-target="#verifModal<?= $row['pembayaran_id']; ?>">Verifikasi</a>
+                                    <?php } else { ?>
+                                        <a type="button" class="badge bg-warning" data-toggle="modal" data-target="#verifModalVerifikasi<?= $row['pembayaran_id']; ?>">Verifikasi</a>
+                                    <?php } ?>
+                                    <a type="button" class="badge bg-success" href="<?= base_url('admin/booking/faktur/' . $row['booking_nomor']); ?>" target="__blank">Faktur</a>
+                                <?php } else { ?>
+                                    <span class="budge bg-danger pl-2 pr-2">DITOLAK</span>
+                                <?php } ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -213,27 +224,67 @@
 </div>
 
 <?php foreach ($pembayaran as $row) : ?>
-    <form action="<?= base_url('admin/booking/status'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('admin/pembayaran/verifikasi'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
-        <div class="modal" tabindex="-1" id="statusModal<?= $row['pembayaran_nomor']; ?>">
+        <div class="modal" tabindex="-1" id="verifModal<?= $row['pembayaran_id']; ?>">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Ubah status booking</h5>
+                        <h5 class="modal-title">Verifikasi Pembayaran</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" required value="<?= $row['pembayaran_nomor']; ?>" />
+                        <input type="hidden" name="idpembayaran" required value="<?= $row['pembayaran_id']; ?>" />
                         <div class="row">
                             <div class="col-sm-12">
+                                <img src="<?= base_url() ?>/upload/<?= $row['pembayaran_bukti']; ?>" alt="Img" width="100%">
+                            </div>
+                            <div class="col-sm-12 mt-4">
+                                <select name="verif" id="verif" class="form-control">
+                                    <option value="1">Verifikasi</option>
+                                    <option value="2">Tolak</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary mt-2 mb-2 mr-2">Yakin</button>
+                        <button type="submit" class="btn btn-warning mt-2 mb-2 mr-2">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form action="<?= base_url('admin/pembayaran/verifikasi-cicilan'); ?>" enctype="multipart/form-data" method="POST">
+        <?= csrf_field(); ?>
+        <div class="modal" tabindex="-1" id="verifModalVerifikasi<?= $row['pembayaran_id']; ?>">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Verifikasi Pembayaran</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" required value="<?= $row['pembayaran_nomor']; ?>" />
+                        <input type="hidden" name="idpembayaran" required value="<?= $row['pembayaran_id']; ?>" />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <img src="<?= base_url() ?>/upload/<?= $row['pembayaran_bukti']; ?>" alt="Img" width="100%">
+                            </div>
+                            <div class="col-sm-12 mt-4">
+                                <select name="verif" id="verif" class="form-control">
+                                    <option value="1">Verifikasi</option>
+                                    <option value="2">Tolak</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning mt-2 mb-2 mr-2">Simpan</button>
                     </div>
                 </div>
             </div>

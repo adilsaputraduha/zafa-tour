@@ -248,6 +248,8 @@
     <script>
         let totalharga = 0;
 
+        document.getElementById("exampleRadios1").click();
+
         $('#tenor').hide();
 
         function functionLunas() {

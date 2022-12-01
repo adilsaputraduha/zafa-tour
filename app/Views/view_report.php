@@ -207,6 +207,27 @@
                     <button class="btn btn-warning text-white" onclick="cetakLaporanBooking()">Cetak Laporan Booking</button>
                 </div>
             </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-12">
+                    <label>Filter Laporan Booking Per Paket</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label>Paket</label>
+                    <select name="paket" id="paket" class="form-control">
+                        <?php
+                        foreach ($paket as $row) : ?>
+                            <option value="<?= $row['paket_id']; ?>"><?= $row['paket_nama']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4 mb-5">
+                <div class="col-12">
+                    <button class="btn btn-warning text-white" onclick="cetakLaporanBookingPerPaket()">Cetak Laporan Booking</button>
+                </div>
+            </div>
         </div>
         <!-- /.card-body -->
     </div>
@@ -233,6 +254,12 @@
         } else {
             window.open("/admin/report/booking/" + tanggalawalbooking + "/" + tanggalakhirbooking, "_blank");
         }
+    }
+
+    function cetakLaporanBookingPerPaket() {
+        let paket = $('#paket').val()
+
+        window.open("/admin/report/booking-paket/" + paket, "_blank");
     }
 </script>
 

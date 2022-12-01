@@ -126,7 +126,8 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary mb-4">Submit</button>
+                        <button type="button" onclick="triggerSubmit()" class="btn btn-primary mb-4">Submit</button>
+                        <button type="submit" class="btn btn-primary mb-4 btnsubmit" id="btnsubmit" name="btnsubmit">Submit</button>
                     </div>
                 </form>
             </section>
@@ -217,6 +218,26 @@
     <script src="<?= base_url() ?>/assets-front/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <script>
+        $('#btnsubmit').hide();
+
+        function triggerSubmit() {
+            let nik = $('#nik').val();
+            let tgllahir = new Date($('#tgllahir').val());
+            let year = tgllahir.getFullYear();
+            let now = new Date().getFullYear();
+            let kurang = now - year;
+
+            if (nik.length > 16) {
+                alert('Nik maksimal 16 karakter')
+            } else if (nik.length < 16) {
+                alert('Nik minimal 16 karakter')
+            } else if (kurang < 18) {
+                alert('Minimal umur 18 tahun')
+            } else {
+                $("#btnsubmit").click()
+            }
+        }
+
         function onlyNumber(event) {
             var angka = (event.which) ? event.which : event.keyCode
             if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))

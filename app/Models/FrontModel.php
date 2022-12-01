@@ -27,4 +27,9 @@ class FrontModel extends Model
         $query = $this->db->table('tb_booking')->update($data, array('booking_nomor' => $id));
         return $query;
     }
+    public function bookingDelete($id)
+    {
+        $query = $this->db->table('tb_booking')->delete(array('booking_nomor' => $id));
+        return $query;
+    }
 }

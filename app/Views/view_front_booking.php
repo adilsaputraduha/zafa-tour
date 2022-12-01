@@ -107,9 +107,9 @@
                                     <?php if ($row['booking_status'] == 1) { ?>
                                         Belum Bayar
                                     <?php } else if ($row['booking_status'] == 2) { ?>
-                                        Sudah Bayar (DP)
+                                        Sudah Bayar DP (Belum Verifikasi)
                                     <?php } else if ($row['booking_status'] == 3) { ?>
-                                        Sudah Bayar (LUNAS)
+                                        Sudah Bayar DP (Sudah Verifikasi)
                                     <?php } else if ($row['booking_status'] == 4) { ?>
                                         Diverifikasi
                                     <?php } else if ($row['booking_status'] == 5) { ?>
@@ -119,16 +119,13 @@
                                     <?php } ?>
                                 </td>
                                 <td style="text-align: center;">
+                                    <a target="__blank" class="badge bg-success pointer text-white" href="<?= base_url('booking/faktur/' . $row['booking_nomor']); ?>">Faktur</a>
                                     <?php if ($row['booking_status'] == 1) { ?>
-                                        <a type="button" class="badge bg-success pointer text-white" data-toggle="modal" data-target="#dpModal<?= $row['booking_nomor']; ?>">DP</a>
+                                        <a type="button" class="badge bg-danger pointer text-white" data-toggle="modal" data-target="#hapusModal<?= $row['booking_nomor']; ?>">Hapus</a>
                                     <?php } ?>
-                                    <?php if ($row['booking_status'] == 2 || $row['booking_status'] == 1) { ?>
-                                        <a type="button" class="badge bg-primary pointer text-white" data-toggle="modal" data-target="#lunasModal<?= $row['booking_nomor']; ?>">Lunas</a>
+                                    <?php if ($row['booking_status'] == 3) { ?>
+                                        <a type="button" class="badge bg-info pointer text-white" data-toggle="modal" data-target="#documentModal<?= $row['booking_nomor']; ?>">Document</a>
                                     <?php } ?>
-                                    <?php if ($row['booking_status'] !== 1) { ?>
-                                        <a target="__blank" class="badge bg-success pointer text-white" href="<?= base_url('booking/faktur/' . $row['booking_nomor']); ?>">Faktur</a>
-                                    <?php } ?>
-                                    <a type="button" class="badge bg-info pointer text-white" data-toggle="modal" data-target="#documentModal<?= $row['booking_nomor']; ?>">Document</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -219,110 +216,6 @@
     </footer>
 
     <?php foreach ($booking as $row) : ?>
-        <form action="<?= base_url('pembayaran/save') ?>" method="POST" enctype="multipart/form-data">
-            <div id="dpModal<?= $row['booking_nomor']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title" id="">Pembayaran DP 10%</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Nomor Faktur</h6>
-                                        <input type="text" class="form-control fakturpemesanan" readonly id="fakturpemesanan" name="fakturpemesanan" value="<?= $row['booking_nomor']; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Jumlah Transfer</h6>
-                                        <input type="text" class="form-control jumlahtransfer" value="Rp. <?= $row['booking_total'] * 10 / 100 ?>" readonly id="jumlahtransfer" name="jumlahtransfer">
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Silahkan transfer ke rekening resmi Zafa Tour Padang:</h6>
-                                        <br>
-                                        <p class="text-dark">Nama Bank : Bank BRI</p>
-                                        <p class="text-dark">Nomor Rekening : 034101000743123</p>
-                                        <p class="text-dark">Atas Nama : Zafa Tour Padang</p>
-                                        <h6 class="text-danger mt-2">Harap hati-hati penipuan!</h6>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Bukti Pembayaran</h6>
-                                        <input type="file" class="form-control gambar" id="gambar" required name="gambar">
-                                        <input type="hidden" class="status" value="0" id="status" required name="status">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="float-right">
-                                <button type="submit" class="btn btn-primary">Upload</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <form action="<?= base_url('pembayaran/save') ?>" method="POST" enctype="multipart/form-data">
-            <div id="lunasModal<?= $row['booking_nomor']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title" id="">Pembayaran Lunas</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Nomor Faktur</h6>
-                                        <input type="text" class="form-control fakturpemesanan" readonly id="fakturpemesanan" name="fakturpemesanan" value="<?= $row['booking_nomor']; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Jumlah Transfer</h6>
-                                        <input type="text" class="form-control jumlahtransfer" value="Rp. <?= $row['booking_total'] ?>" readonly id="jumlahtransfer" name="jumlahtransfer">
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Silahkan transfer ke rekening resmi Zafa Tour Padang:</h6>
-                                        <br>
-                                        <p class="text-dark">Nama Bank : Bank BRI</p>
-                                        <p class="text-dark">Nomor Rekening : 034101000743123</p>
-                                        <p class="text-dark">Atas Nama : Zafa Tour Padang</p>
-                                        <h6 class="text-danger mt-2">Harap hati-hati penipuan!</h6>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <h6 class="text-dark">Bukti Pembayaran</h6>
-                                        <input type="file" class="form-control gambar" id="gambar" required name="gambar">
-                                        <input type="hidden" class="status" value="1" id="status" required name="status">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="float-right">
-                                <button type="submit" class="btn btn-primary">Upload</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
         <div id="documentModal<?= $row['booking_nomor']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -359,6 +252,29 @@
                 </div>
             </div>
         </div>
+        <form action="<?= base_url('booking/delete') ?>" method="POST" enctype="multipart/form-data">
+            <div id="hapusModal<?= $row['booking_nomor']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="">Yakin hapus paket?</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="id" value="<?= $row['booking_nomor']; ?>">
+                            <h6>Tindakan ini tidak dapat dikembalikan</h6>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="float-right">
+                                <button type="submit" class="btn btn-primary">Yakin</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     <?php endforeach; ?>
 
     <script>

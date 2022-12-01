@@ -197,15 +197,17 @@
                                 <?php if ($row['booking_status'] == 1) { ?>
                                     <span class="badge bg-danger">Belum Bayar</span>
                                 <?php } else if ($row['booking_status'] == 2) { ?>
-                                    <span class="badge bg-warning">Sudah Bayar (DP)</span>
+                                    <span class="badge bg-warning">Sudah Bayar DP (Belum Verifikasi)</span>
                                 <?php } else if ($row['booking_status'] == 3) { ?>
-                                    <span class="badge bg-info">Sudah Bayar (LUNAS)</span>
+                                    <span class="badge bg-info">Sudah Bayar DP (Sudah Verifikasi)</span>
                                 <?php } else if ($row['booking_status'] == 4) { ?>
                                     <span class="badge bg-success">Diverifikasi</span>
                                 <?php } else if ($row['booking_status'] == 5) { ?>
                                     <span class="badge bg-success">Selesai</span>
-                                <?php } else { ?>
+                                <?php } else if ($row['booking_status'] == 6) { ?>
                                     <span class="badge bg-info">Batal</span>
+                                <?php } else { ?>
+                                    <span class="badge bg-info">Cicilan</span>
                                 <?php } ?>
                             </td>
                             <td style="text-align: center;">

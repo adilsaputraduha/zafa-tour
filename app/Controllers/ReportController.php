@@ -2,11 +2,18 @@
 
 namespace App\Controllers;
 
+use App\Models\PaketModel;
+
 class ReportController extends BaseController
 {
 	public function index()
 	{
-		return view('view_report');
+		$model = new PaketModel();
+		$data = [
+			'paket' => $model->getPaket()->getResultArray(),
+			'validation' => \Config\Services::validation()
+		];
+		echo view('view_report', $data);
 	}
 
 	public function reportBooking($tanggalawal, $tanggalakhir)
@@ -23,5 +30,20 @@ class ReportController extends BaseController
 			'tanggalakhir' => $tanggalakhir,
 		];
 		echo view('/report/report_booking', $data);
+	}
+
+	public function reportBookingPaket($paket)
+	{
+		$db = \Config\Database::connect();
+		$query = $db->query("SELECT document_nik, document_booking, document_nama, document_alamat, document_tempat_lahir, document_tgl_lahir,
+        document_notelp, document_kelamin, document_no_paspor, document_tgl_berlaku, booking_nomor, booking_tanggal
+        FROM tb_document JOIN tb_booking ON booking_nomor = document_booking
+        WHERE booking_paket = '$paket'");
+
+		$data = [
+			'booking' => $query->getResultArray(),
+			'paket' => $paket,
+		];
+		echo view('/report/report_booking_paket', $data);
 	}
 }

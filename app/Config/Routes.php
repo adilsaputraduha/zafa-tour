@@ -50,13 +50,16 @@ $routes->get('/booking/(:segment)', 'FrontController::bookingDetail/$1', ['filte
 $routes->get('/booking', 'FrontController::bookingList', ['filter' => 'authfront']);
 $routes->post('/booking/save', 'FrontController::bookingSave', ['filter' => 'authfront']);
 $routes->post('/booking/edit', 'FrontController::bookingEdit', ['filter' => 'authfront']);
+$routes->post('/booking/delete', 'FrontController::bookingDelete', ['filter' => 'authfront']);
 $routes->get('/booking/faktur/(:segment)', 'FrontController::faktur/$1', ['filter' => 'authfront']);
 $routes->post('/pembayaran/save', 'FrontController::pembayaranSave', ['filter' => 'authfront']);
+$routes->post('/pembayaran/cicilan', 'FrontController::pembayaranCicilan', ['filter' => 'authfront']);
 $routes->get('/booking/document/(:segment)/(:segment)', 'FrontController::document/$1/$2', ['filter' => 'authfront']);
 $routes->get('/booking/document/edit/(:segment)/(:segment)', 'FrontController::documentedit/$1/$2', ['filter' => 'authfront']);
 $routes->post('/booking/document/save', 'FrontController::documentSave', ['filter' => 'authfront']);
 $routes->post('/booking/document/edit', 'FrontController::documentEditProcess', ['filter' => 'authfront']);
 $routes->post('/contact/save', 'FrontController::contactSave');
+$routes->get('/payment', 'FrontController::paymentList', ['filter' => 'authfront']);
 
 // Route Admin
 $routes->get('/admin', 'HomeController::index', ['filter' => 'auth']);
@@ -120,9 +123,12 @@ $routes->post('/admin/booking/status', 'BookingController::status', ['filter' =>
 $routes->get('/admin/booking/document/(:segment)/(:segment)', 'BookingController::document/$1/$2', ['filter' => 'auth']);
 // Pembayaran
 $routes->get('/admin/pembayaran', 'PembayaranController::index', ['filter' => 'auth']);
+$routes->post('/admin/pembayaran/verifikasi', 'PembayaranController::verif', ['filter' => 'auth']);
+$routes->post('/admin/pembayaran/verifikasi-cicilan', 'PembayaranController::verifCicilan', ['filter' => 'auth']);
 // Report
 $routes->get('/admin/report', 'ReportController::index', ['filter' => 'auth']);
 $routes->get('/admin/report/booking/(:segment)/(:segment)', 'ReportController::reportBooking/$1/$2', ['filter' => 'auth']);
+$routes->get('/admin/report/booking-paket/(:segment)', 'ReportController::reportBookingPaket/$1', ['filter' => 'auth']);
 
 /*
  * --------------------------------------------------------------------

@@ -30,23 +30,16 @@ CREATE TABLE `tb_booking` (
   `booking_jumlah` int(11) DEFAULT NULL,
   `booking_total` int(11) DEFAULT NULL,
   `booking_document` int(11) DEFAULT 0,
+  `booking_metode` int(11) DEFAULT NULL,
+  `booking_tenor` int(11) DEFAULT NULL,
+  `booking_isverif` int(11) DEFAULT NULL,
   PRIMARY KEY (`booking_nomor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_booking` */
 
-insert  into `tb_booking`(`booking_nomor`,`booking_tanggal`,`booking_peserta`,`booking_paket`,`booking_status`,`booking_jenis`,`booking_jumlah`,`booking_total`,`booking_document`) values 
-('FP-20221009-981','2022-10-09',3,1,2,1,2,5400000,1),
-('FP-20221010-975','2022-10-10',3,1,4,0,1,2700000,1),
-('FP-20221011-420','2022-10-11',3,1,0,NULL,NULL,NULL,0),
-('FP-20221013-906','2022-10-13',3,1,0,NULL,NULL,NULL,0),
-('FP-20221014-609','2022-10-14',3,1,1,1,2,5400000,1),
-('FP-20221014-848','2022-10-14',3,1,1,1,2,5400000,0),
-('FP-20221025-443','2022-10-25',3,1,0,NULL,NULL,NULL,0),
-('FP-20221026-794','2022-10-26',3,2,0,NULL,NULL,NULL,0),
-('FP-20221027-416','2022-10-27',3,1,1,0,3,8100000,0),
-('FP-20221027-741','2022-10-27',3,1,1,1,2,5400000,0),
-('FP-20221030-765','2022-10-30',3,1,0,NULL,NULL,NULL,0);
+insert  into `tb_booking`(`booking_nomor`,`booking_tanggal`,`booking_peserta`,`booking_paket`,`booking_status`,`booking_jenis`,`booking_jumlah`,`booking_total`,`booking_document`,`booking_metode`,`booking_tenor`,`booking_isverif`) values 
+('FP-20221130-421','2022-12-01',3,1,7,1,2,5400000,0,1,3,1);
 
 /*Table structure for table `tb_contact` */
 
@@ -80,7 +73,7 @@ CREATE TABLE `tb_detail_fasilitas` (
   `detail_paket` int(11) DEFAULT NULL,
   `detail_fasilitas` int(11) DEFAULT NULL,
   PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_detail_fasilitas` */
 
@@ -92,7 +85,10 @@ insert  into `tb_detail_fasilitas`(`detail_id`,`detail_paket`,`detail_fasilitas`
 (8,210,5),
 (9,210,6),
 (10,210,7),
-(11,101,1);
+(11,101,1),
+(12,609,1),
+(13,609,2),
+(14,609,3);
 
 /*Table structure for table `tb_detail_syarat` */
 
@@ -103,13 +99,15 @@ CREATE TABLE `tb_detail_syarat` (
   `detail_paket` int(11) DEFAULT NULL,
   `detail_syarat` int(11) DEFAULT NULL,
   PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_detail_syarat` */
 
 insert  into `tb_detail_syarat`(`detail_id`,`detail_paket`,`detail_syarat`) values 
 (3,210,1),
-(4,210,2);
+(4,210,2),
+(5,609,1),
+(6,609,2);
 
 /*Table structure for table `tb_document` */
 
@@ -131,12 +129,9 @@ CREATE TABLE `tb_document` (
   `document_foto_paspor` varchar(255) DEFAULT NULL,
   `document_peserta` int(11) DEFAULT NULL,
   PRIMARY KEY (`document_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_document` */
-
-insert  into `tb_document`(`document_id`,`document_booking`,`document_nik`,`document_nama`,`document_alamat`,`document_tempat_lahir`,`document_tgl_lahir`,`document_notelp`,`document_kelamin`,`document_no_paspor`,`document_tgl_berlaku`,`document_foto_ktp`,`document_foto_paspor`,`document_peserta`) values 
-(1,'FP-20221014-609','242422424242','Rifki','Ada','Padang','2022-10-27','4242424',1,'345353','2022-10-27','1666842255_6829bcfaa2541f6a0333.svg','1666842255_9f8f32f994e44076c664.svg',1);
 
 /*Table structure for table `tb_faq` */
 
@@ -193,12 +188,12 @@ CREATE TABLE `tb_paket` (
   `paket_kuota` int(11) DEFAULT NULL,
   `paket_session` int(11) DEFAULT NULL,
   PRIMARY KEY (`paket_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_paket` */
 
 insert  into `tb_paket`(`paket_id`,`paket_nama`,`paket_deskripsi`,`paket_harga`,`paket_tgl_mulai`,`paket_tgl_selesai`,`paket_kuota`,`paket_session`) values 
-(1,'Paket Hemat Banget','Paket Hemat adalah paket untuk perjalanan umroh anda yang ramah dikantong namun mendapatkan fasilitas yang mewah.',2700000,'2022-11-01','2022-11-30',100,210);
+(1,'Paket Hemat Banget','Paket Hemat adalah paket untuk perjalanan umroh anda yang ramah dikantong namun mendapatkan fasilitas yang mewah.',2700000,'2023-01-31','2023-02-28',100,210);
 
 /*Table structure for table `tb_pembayaran` */
 
@@ -210,14 +205,17 @@ CREATE TABLE `tb_pembayaran` (
   `pembayaran_tanggal` date DEFAULT NULL,
   `pembayaran_bukti` varchar(255) DEFAULT NULL,
   `pembayaran_bayar` int(11) DEFAULT NULL,
+  `pembayaran_isverif` int(11) DEFAULT NULL,
+  `pembayaran_tenor` int(11) DEFAULT NULL,
   PRIMARY KEY (`pembayaran_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_pembayaran` */
 
-insert  into `tb_pembayaran`(`pembayaran_id`,`pembayaran_nomor`,`pembayaran_tanggal`,`pembayaran_bukti`,`pembayaran_bayar`) values 
-(1,'FP-20221009-981','2022-10-12','1665563268_94827748378fbe836168.png',0),
-(2,'FP-20221010-975','2022-10-12','1665563861_5a5253a689e561839eb5.png',1);
+insert  into `tb_pembayaran`(`pembayaran_id`,`pembayaran_nomor`,`pembayaran_tanggal`,`pembayaran_bukti`,`pembayaran_bayar`,`pembayaran_isverif`,`pembayaran_tenor`) values 
+(12,'FP-20221130-421','2022-12-01','1669864078_d2e955998be3a170b552.png',2,2,1),
+(13,'FP-20221130-421','2022-12-01','1669865025_cc1d5d7997d5a32deaef.png',2,2,1),
+(14,'FP-20221130-421','2022-12-01','1669865670_0d8b3e5f30d338b18bd9.png',2,1,1);
 
 /*Table structure for table `tb_peserta` */
 

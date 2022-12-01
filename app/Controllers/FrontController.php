@@ -119,6 +119,16 @@ class FrontController extends BaseController
 		return view('view_front_booking', $data);
 	}
 
+	public function paymentList()
+	{
+		$id = session()->get('pesertaId');
+		$model = new BookingModel();
+		$data = [
+			'booking' => $model->getBookingById($id)->getResultArray()
+		];
+		return view('view_front_payment', $data);
+	}
+
 	public function bookingDetail($id)
 	{
 		$model = new BookingModel();
@@ -135,6 +145,7 @@ class FrontController extends BaseController
 		$generateDate = date('Ymd');
 		$generateInvoice = 'FP-' . $generateDate . "-" . $generateRandom;
 
+		date_default_timezone_set('Asia/Jakarta');
 		$data = array(
 			'booking_nomor' => $generateInvoice,
 			'booking_tanggal' => date('Ymd'),
@@ -171,6 +182,15 @@ class FrontController extends BaseController
 		return redirect()->to('/booking');
 	}
 
+	public function bookingDelete()
+	{
+		$model = new FrontModel();
+		$id = $this->request->getPost('id');
+		$model->bookingDelete($id);
+		session()->setFlashdata('success', 'Berhasil menghapus transaksi');
+		return redirect()->to('/booking');
+	}
+
 	public function pembayaranSave()
 	{
 		$fakturpemesanan = $this->request->getPost('fakturpemesanan');
@@ -179,6 +199,8 @@ class FrontController extends BaseController
 
 		$fileName = $fileGambar->getRandomName();
 		$fileGambar->move('upload/', $fileName);
+
+		date_default_timezone_set('Asia/Jakarta');
 
 		$model = new PembayaranModel();
 		$data = array(
@@ -200,7 +222,43 @@ class FrontController extends BaseController
 		);
 		$modelsatu->updateBooking($datadua, $fakturpemesanan);
 		session()->setFlashdata('success', 'Berhasil membayar');
-		return redirect()->to('booking');
+		return redirect()->to('payment');
+	}
+
+	public function pembayaranCicilan()
+	{
+		$fakturpemesanan = $this->request->getPost('fakturpemesanan');
+		$status = $this->request->getPost('status');
+		$fileGambar = $this->request->getFile('gambar');
+		$idtenor = $this->request->getPost('idtenor');
+
+		$fileName = $fileGambar->getRandomName();
+		$fileGambar->move('upload/', $fileName);
+
+		date_default_timezone_set('Asia/Jakarta');
+
+		$model = new PembayaranModel();
+		$data = array(
+			'pembayaran_nomor' => $this->request->getPost('fakturpemesanan'),
+			'pembayaran_tanggal' =>  date('Ymd'),
+			'pembayaran_bukti' => $fileName,
+			'pembayaran_bayar' => 2,
+			'pembayaran_tenor' => $idtenor,
+		);
+		$model->savePembayaran($data);
+
+		if ($status == 1) {
+			$pemesananstatus = 3;
+		} else {
+			$pemesananstatus = 2;
+		}
+		$modelsatu = new BookingModel();
+		$datadua = array(
+			'booking_status' => $pemesananstatus,
+		);
+		$modelsatu->updateBooking($datadua, $fakturpemesanan);
+		session()->setFlashdata('success', 'Berhasil membayar');
+		return redirect()->to('payment');
 	}
 
 	public function faktur($id)

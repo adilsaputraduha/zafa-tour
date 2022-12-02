@@ -172,7 +172,22 @@
             </div>
         <?php } ?>
         <div class="card-header">
-            <a href="<?= base_url('admin/report'); ?>" class="btn btn-success btn-sm"><i class="fa fa-print mr-2"></i>Laporan</a>
+            <div class="row">
+                <div class="col-lg-2">
+                    <a onclick="cetakLaporanBookingPerPaket()" type="button" class="btn btn-success btn-sm"><i class="fa fa-print mr-2"></i>Laporan</a>
+                </div>
+                <div class="col-lg-4">
+                    <select name="paket" id="paket" class="form-control">
+                        <?php
+                        foreach ($paket as $row) : ?>
+                            <option value="<?= $row['paket_id']; ?>"><?= $row['paket_nama']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-warning" onclick="pindahRoute()">Terapkan</button>
+                </div>
+            </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -214,80 +229,18 @@
     </div>
 </div>
 
-<?php foreach ($booking as $row) : ?>
-    <form action="<?= base_url('admin/booking/status'); ?>" enctype="multipart/form-data" method="POST">
-        <?= csrf_field(); ?>
-        <div class="modal" tabindex="-1" id="statusModal<?= $row['booking_nomor']; ?>">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Ubah status booking</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="id" required value="<?= $row['booking_nomor']; ?>" />
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <select name="status" id="status" class="form-control">
-                                    <?php if ($row['booking_status'] == 3) { ?>
-                                        <option value="4">Diverifikasi</option>
-                                        <option value="6">Batal</option>
-                                    <?php } else if ($row['booking_status'] == 4) { ?>
-                                        <option value="5">Selesai</option>
-                                        <option value="6">Batal</option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary mt-2 mb-2 mr-2">Yakin</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <div class="modal" tabindex="-1" id="documentModal<?= $row['booking_nomor']; ?>">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Dokumen peserta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <?php
-                        for ($x = 1; $x <= $row['booking_jumlah']; $x++) { ?>
-                            <?php
-                            $faktur = (string) $row['booking_nomor'];
-                            $db = db_connect();
-                            $queryeksekusi = "SELECT document_peserta FROM tb_document WHERE document_booking = '$faktur' AND document_peserta = '$x'";
-                            $detail = $db->query($queryeksekusi);
-                            ?>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <h6 class="text-dark">Peserta <?= $x; ?></h6>
-                                    <?php if ($detail->getResultArray() == null) { ?>
-                                        <h6>Belum Input</h6>
-                                    <?php } else { ?>
-                                        <a type="button" target="__blank" href="<?= base_url('admin/booking/document/' . $row['booking_nomor'] . '/' . $x) ?>" class="btn btn-warning text-white">Lihat</a>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endforeach; ?>
+<script>
+    function cetakLaporanBookingPerPaket() {
+        let paket = $('#paket').val()
+
+        window.open("/admin/manifest/booking-paket/" + paket, "_blank");
+    }
+
+    function pindahRoute() {
+        let paket = $('#paket').val()
+
+        window.location.href = "/admin/manifest/" + paket;
+    }
+</script>
 
 <?= $this->endSection(); ?>

@@ -130,6 +130,7 @@ $routes->get('/admin/report', 'ReportController::index', ['filter' => 'auth']);
 $routes->get('/admin/report/booking/(:segment)/(:segment)', 'ReportController::reportBooking/$1/$2', ['filter' => 'auth']);
 // Manifest
 $routes->get('/admin/manifest', 'ManifestController::index', ['filter' => 'auth']);
+$routes->get('/admin/manifest/(:segment)', 'ManifestController::indexParameter/$1', ['filter' => 'auth']);
 $routes->get('/admin/manifest/booking-paket/(:segment)', 'ManifestController::reportBookingPaket/$1', ['filter' => 'auth']);
 /*
  * --------------------------------------------------------------------

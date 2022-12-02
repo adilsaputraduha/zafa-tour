@@ -88,6 +88,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="<?= base_url('admin/manifest'); ?>" class="nav-link">
+                <i class="nav-icon far fa fa-book"></i>
+                <p>
+                    Manifest
+                </p>
+            </a>
+        </li>
     <?php } ?>
     <?php if (session()->get('userLevel') == 0 || session()->get('userLevel') == 1) { ?>
         <li class="nav-item has-treeview">

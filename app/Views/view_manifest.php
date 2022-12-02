@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url('admin/peserta'); ?>" class="nav-link active">
+                    <a href="<?= base_url('admin/peserta'); ?>" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Peserta</p>
                     </a>
@@ -89,7 +89,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= base_url('admin/manifest'); ?>" class="nav-link">
+            <a href="<?= base_url('admin/manifest'); ?>" class="nav-link active">
                 <i class="nav-icon far fa fa-book"></i>
                 <p>
                     Manifest
@@ -98,8 +98,8 @@
         </li>
     <?php } ?>
     <?php if (session()->get('userLevel') == 0 || session()->get('userLevel') == 1) { ?>
-        <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active text-white">
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
                 <i class="nav-icon fas fa fa-pager"></i>
                 <p>
                     Landing Page
@@ -108,7 +108,7 @@
             </a>
             <ul class="nav nav-treeview ">
                 <li class="nav-item">
-                    <a href="<?= base_url('admin/contact'); ?>" class="nav-link active">
+                    <a href="<?= base_url('admin/contact'); ?>" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Contact</p>
                     </a>
@@ -147,8 +147,8 @@
         <div class="row mb-2">
             <div class="col-sm-12">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">Landing Page</li>
-                    <li class="breadcrumb-item active">Contact</li>
+                    <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
+                    <li class="breadcrumb-item active">Booking</li>
                 </ol>
             </div>
         </div>
@@ -157,7 +157,7 @@
 <div class="container">
     <div class="card">
         <?php if (session()->getFlashdata('success')) { ?>
-            <div class="alert alert-warning text-white icons-alert m-2">
+            <div class="alert alert-success icons-alert m-2">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -171,42 +171,40 @@
                 <?php echo session()->getFlashdata('failed'); ?>
             </div>
         <?php } ?>
+        <div class="card-header">
+            <a href="<?= base_url('admin/report'); ?>" class="btn btn-success btn-sm"><i class="fa fa-print mr-2"></i>Laporan</a>
+        </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="table" class="table table-striped">
+            <table id="table" class="table table-bordered">
                 <thead>
-                    <tr>
-                        <th>No.</th>
+                    <tr style="height: 25px;">
                         <th>Nama</th>
-                        <th>Email</th>
-                        <th>Subject</th>
-                        <th>Tanggal</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
+                        <th>NIK</th>
+                        <th>Jenis Kelamin</th>
+                        <th>No Hp</th>
+                        <th>Tempat Lahir</th>
+                        <th>Tgl Lahir</th>
+                        <th>Passpor</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $no = 0;
-                    foreach ($contact as $row) : $no++ ?>
-                        <tr>
-                            <td> <?= $no; ?></td>
-                            <td> <?= $row['contact_nama']; ?></td>
-                            <td> <?= $row['contact_email']; ?></td>
-                            <td> <?= $row['contact_subject']; ?></td>
-                            <td> <?= date('d M Y hh:mm:ss', strtotime($row['contact_created'])) ?></td>
+                    foreach ($booking as $row) : $no++ ?>
+                        <tr style="height: 20px; text-align: center;">
+                            <td> <?= $row['document_nama']; ?></td>
+                            <td> <?= $row['document_nik']; ?></td>
                             <td>
-                                <?php if ($row['contact_status'] == 1) { ?>
-                                    Dibaca
+                                <?php if ($row['document_kelamin'] == 0) { ?>
+                                    P
                                 <?php } else { ?>
-                                    Belum Dibaca
+                                    L
                                 <?php } ?>
                             </td>
-                            <td style="text-align: center;">
-                                <a type="button" class="badge bg-warning pointer" data-toggle="modal" data-target="#showModal<?= $row['contact_id']; ?>">Lihat</a>
-                                <?php if ($row['contact_status'] == 0) { ?>
-                                    <a type="button" class="badge bg-warning pointer" data-toggle="modal" data-target="#readModal<?= $row['contact_id']; ?>">Baca</a>
-                                <?php } ?>
-                            </td>
+                            <td> <?= $row['document_notelp']; ?></td>
+                            <td> <?= $row['document_tempat_lahir']; ?></td>
+                            <td> <?= $row['document_tgl_lahir']; ?></td>
+                            <td> <?= $row['document_no_paspor']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -216,60 +214,80 @@
     </div>
 </div>
 
-<?php foreach ($contact as $row) : ?>
-    <div id="showModal<?= $row['contact_id']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
-        <div class="modal-dialog modal-md" role="document">
+<?php foreach ($booking as $row) : ?>
+    <form action="<?= base_url('admin/booking/status'); ?>" enctype="multipart/form-data" method="POST">
+        <?= csrf_field(); ?>
+        <div class="modal" tabindex="-1" id="statusModal<?= $row['booking_nomor']; ?>">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ubah status booking</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" required value="<?= $row['booking_nomor']; ?>" />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="status" id="status" class="form-control">
+                                    <?php if ($row['booking_status'] == 3) { ?>
+                                        <option value="4">Diverifikasi</option>
+                                        <option value="6">Batal</option>
+                                    <?php } else if ($row['booking_status'] == 4) { ?>
+                                        <option value="5">Selesai</option>
+                                        <option value="6">Batal</option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary mt-2 mb-2 mr-2">Yakin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="modal" tabindex="-1" id="documentModal<?= $row['booking_nomor']; ?>">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="">Pesan</h6>
+                    <h5 class="modal-title">Dokumen peserta</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Subject</label>
-                                <input type="text" readonly name="subject" required id="subject" value="<?= $row['contact_subject']; ?>" class="form-control">
+                        <?php
+                        for ($x = 1; $x <= $row['booking_jumlah']; $x++) { ?>
+                            <?php
+                            $faktur = (string) $row['booking_nomor'];
+                            $db = db_connect();
+                            $queryeksekusi = "SELECT document_peserta FROM tb_document WHERE document_booking = '$faktur' AND document_peserta = '$x'";
+                            $detail = $db->query($queryeksekusi);
+                            ?>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <h6 class="text-dark">Peserta <?= $x; ?></h6>
+                                    <?php if ($detail->getResultArray() == null) { ?>
+                                        <h6>Belum Input</h6>
+                                    <?php } else { ?>
+                                        <a type="button" target="__blank" href="<?= base_url('admin/booking/document/' . $row['booking_nomor'] . '/' . $x) ?>" class="btn btn-warning text-white">Lihat</a>
+                                    <?php } ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Message</label>
-                                <textarea name="message" readonly id="message" rows="15" class="form-control"><?= $row['contact_message']; ?></textarea>
-                            </div>
-                        </div>
+                        <?php } ?>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <form action="<?= base_url('admin/contact/edit'); ?>" method="POST">
-        <?= csrf_field(); ?>
-        <div class="modal" tabindex="-1" id="readModal<?= $row['contact_id']; ?>">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Konfirmasi</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="id" required value="<?= $row['contact_id']; ?>" />
-                        <h6>Yakin telah membaca pesan ini?</h6>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-warning text-white mt-2 mb-2 mr-2">Yakin</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-
 <?php endforeach; ?>
 
 <?= $this->endSection(); ?>

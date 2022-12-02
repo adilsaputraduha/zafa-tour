@@ -88,6 +88,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="<?= base_url('admin/manifest'); ?>" class="nav-link">
+                <i class="nav-icon far fa fa-book"></i>
+                <p>
+                    Manifest
+                </p>
+            </a>
+        </li>
     <?php } ?>
     <?php if (session()->get('userLevel') == 0 || session()->get('userLevel') == 1) { ?>
         <li class="nav-item has-treeview">
@@ -206,8 +214,12 @@
                                     <span class="badge bg-success">Selesai</span>
                                 <?php } else if ($row['booking_status'] == 6) { ?>
                                     <span class="badge bg-info">Batal</span>
-                                <?php } else { ?>
+                                <?php } else if ($row['booking_status'] == 7) { ?>
                                     <span class="badge bg-info">Cicilan</span>
+                                <?php } else if ($row['booking_status'] == 8) { ?>
+                                    <span class="badge bg-info">Sudah Bayar Lunas (Belum Verifikasi)</span>
+                                <?php } else { ?>
+                                    <span class="badge bg-info">Sudah Bayar Lunas (Sudah Verifikasi)</span>
                                 <?php } ?>
                             </td>
                             <td style="text-align: center;">

@@ -104,9 +104,10 @@
                                     <?php if ($row['booking_status'] == 1 && $row['booking_metode'] == 0) { ?>
                                         <a type="button" class="badge bg-success pointer text-white" data-toggle="modal" data-target="#dpModal<?= $row['booking_nomor']; ?>">DP</a>
                                     <?php } ?>
-                                    <?php if ($row['booking_metode'] == 0) { ?>
+                                    <?php if ($row['booking_metode'] == 0 && $row['booking_status'] != 9) { ?>
                                         <a type="button" class="badge bg-warning pointer text-white" data-toggle="modal" data-target="#lunasModal<?= $row['booking_nomor']; ?>">Lunas</a>
-                                    <?php } else { ?>
+                                    <?php } ?>
+                                    <?php if ($row['booking_metode'] == 1 && $row['booking_status'] != 9) { ?>
                                         <a type="button" class="badge bg-info pointer text-white" data-toggle="modal" data-target="#documentModal<?= $row['booking_nomor']; ?>">Cicilan</a>
                                     <?php } ?>
                                 </td>

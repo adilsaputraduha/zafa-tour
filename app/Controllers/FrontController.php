@@ -212,7 +212,7 @@ class FrontController extends BaseController
 		$model->savePembayaran($data);
 
 		if ($status == 1) {
-			$pemesananstatus = 3;
+			$pemesananstatus = 8;
 		} else {
 			$pemesananstatus = 2;
 		}
@@ -247,14 +247,9 @@ class FrontController extends BaseController
 		);
 		$model->savePembayaran($data);
 
-		if ($status == 1) {
-			$pemesananstatus = 3;
-		} else {
-			$pemesananstatus = 2;
-		}
 		$modelsatu = new BookingModel();
 		$datadua = array(
-			'booking_status' => $pemesananstatus,
+			'booking_status' => 7,
 		);
 		$modelsatu->updateBooking($datadua, $fakturpemesanan);
 		session()->setFlashdata('success', 'Berhasil membayar');

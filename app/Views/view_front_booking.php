@@ -114,8 +114,14 @@
                                         Diverifikasi
                                     <?php } else if ($row['booking_status'] == 5) { ?>
                                         Selesai
-                                    <?php } else { ?>
+                                    <?php } else if ($row['booking_status'] == 6) { ?>
                                         Batal
+                                    <?php } else if ($row['booking_status'] == 7) { ?>
+                                        Cicilan
+                                    <?php } else if ($row['booking_status'] == 8) { ?>
+                                        Sudah Bayar Lunas (Belum Verifikasi)
+                                    <?php } else { ?>
+                                        Sudah Bayar Lunas (Sudah Verifikasi)
                                     <?php } ?>
                                 </td>
                                 <td style="text-align: center;">
@@ -123,7 +129,7 @@
                                     <?php if ($row['booking_status'] == 1) { ?>
                                         <a type="button" class="badge bg-danger pointer text-white" data-toggle="modal" data-target="#hapusModal<?= $row['booking_nomor']; ?>">Hapus</a>
                                     <?php } ?>
-                                    <?php if ($row['booking_status'] == 3) { ?>
+                                    <?php if ($row['booking_status'] == 3 || $row['booking_status'] == 9) { ?>
                                         <a type="button" class="badge bg-info pointer text-white" data-toggle="modal" data-target="#documentModal<?= $row['booking_nomor']; ?>">Document</a>
                                     <?php } ?>
                                 </td>

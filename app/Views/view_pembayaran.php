@@ -88,6 +88,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="<?= base_url('admin/manifest'); ?>" class="nav-link">
+                <i class="nav-icon far fa fa-book"></i>
+                <p>
+                    Manifest
+                </p>
+            </a>
+        </li>
     <?php } ?>
     <?php if (session()->get('userLevel') == 0 || session()->get('userLevel') == 1) { ?>
         <li class="nav-item has-treeview">
@@ -238,6 +246,7 @@
                     <div class="modal-body">
                         <input type="hidden" name="id" required value="<?= $row['pembayaran_nomor']; ?>" />
                         <input type="hidden" name="idpembayaran" required value="<?= $row['pembayaran_id']; ?>" />
+                        <input type="hidden" name="dporlunas" required value="<?= $row['pembayaran_bayar']; ?>" />
                         <div class="row">
                             <div class="col-sm-12">
                                 <img src="<?= base_url() ?>/upload/<?= $row['pembayaran_bukti']; ?>" alt="Img" width="100%">

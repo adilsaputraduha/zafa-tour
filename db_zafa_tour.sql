@@ -33,6 +33,7 @@ CREATE TABLE `tb_booking` (
   `booking_metode` int(11) DEFAULT NULL,
   `booking_tenor` int(11) DEFAULT NULL,
   `booking_isverif` int(11) DEFAULT NULL,
+  `booking_cicilanke` int(11) DEFAULT NULL,
   PRIMARY KEY (`booking_nomor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

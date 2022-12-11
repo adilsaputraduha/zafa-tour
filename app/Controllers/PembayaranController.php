@@ -81,7 +81,6 @@ class PembayaranController extends BaseController
         $idpembayaran = $this->request->getPost('idpembayaran');
         $verif = $this->request->getPost('verif');
         $idtenor = $this->request->getPost('idtenor');
-        $dataPembayaran[0]['booking_tenor'];
 
         $status = '';
         $cicilanke = '';

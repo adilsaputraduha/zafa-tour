@@ -132,6 +132,7 @@ $routes->get('/admin/report/booking/(:segment)/(:segment)', 'ReportController::r
 $routes->get('/admin/manifest', 'ManifestController::index', ['filter' => 'auth']);
 $routes->get('/admin/manifest/(:segment)', 'ManifestController::indexParameter/$1', ['filter' => 'auth']);
 $routes->get('/admin/manifest/booking-paket/(:segment)', 'ManifestController::reportBookingPaket/$1', ['filter' => 'auth']);
+$routes->post('/admin/manifest/ubah-paket', 'ManifestController::ubahPaket', ['filter' => 'auth']);
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -201,6 +201,7 @@
                         <th>Tempat Lahir</th>
                         <th>Tgl Lahir</th>
                         <th>Passpor</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -211,15 +212,18 @@
                             <td> <?= $row['document_nik']; ?></td>
                             <td>
                                 <?php if ($row['document_kelamin'] == 0) { ?>
-                                    P
+                                    Perempuan
                                 <?php } else { ?>
-                                    L
+                                    Laki-Laki
                                 <?php } ?>
                             </td>
                             <td> <?= $row['document_notelp']; ?></td>
                             <td> <?= $row['document_tempat_lahir']; ?></td>
                             <td> <?= $row['document_tgl_lahir']; ?></td>
                             <td> <?= $row['document_no_paspor']; ?></td>
+                            <td style="text-align: center;">
+                                <a type="button" class="badge bg-warning pointer" data-toggle="modal" data-target="#ubahPaket<?= $row['document_id']; ?>">Ubah Paket</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -228,6 +232,44 @@
         <!-- /.card-body -->
     </div>
 </div>
+
+<?php foreach ($booking as $row) : ?>
+    <form action="<?= base_url('admin/manifest/ubah-paket'); ?>" enctype="multipart/form-data" method="POST">
+        <?= csrf_field(); ?>
+        <div class="modal" tabindex="-1" id="ubahPaket<?= $row['document_id']; ?>">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ubah Paket <?= $row['document_nama']; ?></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" required value="<?= $row['document_id']; ?>" />
+                        <input type="hidden" name="idnota" required value="<?= $row['document_booking']; ?>" />
+                        <input type="hidden" name="peserta" required value="<?= $row['booking_peserta']; ?>" />
+                        <input type="hidden" name="jumlahbooking" required value="<?= $row['booking_jumlah']; ?>" />
+                        <div class="row">
+                            <div class="col-sm-12 mt-4">
+                                <label class="text-danger" for="">Peserta akan didaftarkan pada paket yang dipilih</label>
+                                <select name="inputUbahPaket" id="inputUbahPaket" class="form-control">
+                                    <?php
+                                    foreach ($paket as $row) : ?>
+                                        <option value="<?= $row['paket_id']; ?>"><?= $row['paket_nama']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning mt-2 mb-2 mr-2">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<?php endforeach; ?>
 
 <script>
     function cetakLaporanBookingPerPaket() {

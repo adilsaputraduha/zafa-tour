@@ -330,7 +330,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <?php
-                            for ($x = 1; $x <= $row['booking_tenor']; $x++) { ?>
+                            for ($x = 1; $x <= $row['booking_cicilanke']; $x++) { ?>
                                 <?php
                                 $faktur = (string) $row['booking_nomor'];
                                 $db = db_connect();

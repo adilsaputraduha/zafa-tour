@@ -65,28 +65,46 @@
             <?php $no = 0;
             foreach ($booking as $row) : $no++ ?>
                 <tr>
-                    <td width="10%">Nomor</td>
-                    <td width="20%"><strong><?= $nomorbooking; ?></strong></td>
-                    <td width="10%">Peserta</td>
-                    <td width="20%"><strong><?= $row['peserta_nama']; ?></strong></td>
+                    <td width="10%" style="padding-top: 0.5rem;">Nomor Nota</td>
+                    <td width="20%" style="padding-top: 0.5rem;"><strong><?= $nomorbooking; ?></strong></td>
+                    <td width="10%" style="padding-top: 0.5rem;">Peserta</td>
+                    <td width="20%" style="padding-top: 0.5rem;"><strong><?= $row['peserta_nama']; ?></strong></td>
                 </tr>
                 <tr>
-                    <td>Tanggal</td>
-                    <td><strong><?= $row['booking_tanggal']; ?></strong></td>
-                    <td>Status</td>
-                    <td><strong>
+                    <td style="padding-top: 0.5rem;">Tanggal</td>
+                    <td style="padding-top: 0.5rem;"><strong><?= $row['booking_tanggal']; ?></strong></td>
+                    <td style="padding-top: 0.5rem;">Status</td>
+                    <td style="padding-top: 0.5rem;">
+                        <strong>
                             <?php if ($row['booking_status'] == 1) { ?>
                                 Belum Bayar
                             <?php } else if ($row['booking_status'] == 2) { ?>
-                                Sudah Bayar (DP)
+                                Sudah Bayar DP (Belum Verifikasi)
                             <?php } else if ($row['booking_status'] == 3) { ?>
-                                Sudah Bayar (LUNAS)
+                                Sudah Bayar DP (Sudah Verifikasi)
                             <?php } else if ($row['booking_status'] == 4) { ?>
                                 Diverifikasi
                             <?php } else if ($row['booking_status'] == 5) { ?>
                                 Selesai
-                            <?php } else { ?>
+                            <?php } else if ($row['booking_status'] == 6) { ?>
                                 Batal
+                            <?php } else if ($row['booking_status'] == 7) { ?>
+                                Cicilan
+                            <?php } else if ($row['booking_status'] == 8) { ?>
+                                Sudah Bayar Lunas (Belum Verifikasi)
+                            <?php } else { ?>
+                                Sudah Bayar Lunas (Sudah Verifikasi)
+                            <?php } ?>
+                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 0.5rem;">Metode Pembayaran</td>
+                    <td style="padding-top: 0.5rem;"><strong>
+                            <?php if ($row['booking_metode'] == 0) { ?>
+                                Lunas
+                            <?php } else { ?>
+                                Cicilan
                             <?php } ?>
                         </strong></td>
                 </tr>
@@ -98,8 +116,8 @@
                     <th>Nama Paket</th>
                     <th>Harga</th>
                     <th>Jenis</th>
-                    <th>Qty</th>
-                    <th>Jumlah</th>
+                    <th>Peserta</th>
+                    <th>Total Bayar</th>
                 </tr>
             </thead>
             <tbody>
@@ -125,12 +143,12 @@
             <?php $no = 0;
             foreach ($booking as $row) : $no++ ?>
                 <tr>
-                    <td width="10%">Tanggal Keberangkatan</td>
-                    <td width="20%"><strong><?= date('d M Y', strtotime($row['paket_tgl_mulai'])) ?></strong></td>
+                    <td width="10%" style="padding-top: 0.5rem;">Tanggal Keberangkatan</td>
+                    <td width="20%" style="padding-top: 0.5rem;"><strong><?= date('d M Y', strtotime($row['paket_tgl_mulai'])) ?></strong></td>
                 </tr>
                 <tr>
-                    <td width="10%">Tanggal Selesai</td>
-                    <td width="20%"><strong><?= date('d M Y', strtotime($row['paket_tgl_selesai'])) ?></strong></td>
+                    <td width="10%" style="padding-top: 0.5rem;">Tanggal Selesai</td>
+                    <td width="20%" style="padding-top: 0.5rem;"><strong><?= date('d M Y', strtotime($row['paket_tgl_selesai'])) ?></strong></td>
                 </tr>
             <?php endforeach; ?>
         </table>

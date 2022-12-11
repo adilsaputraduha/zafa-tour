@@ -280,6 +280,7 @@
                     <div class="modal-body">
                         <input type="hidden" name="id" required value="<?= $row['pembayaran_nomor']; ?>" />
                         <input type="hidden" name="idpembayaran" required value="<?= $row['pembayaran_id']; ?>" />
+                        <input type="hidden" name="idtenor" required value="<?= $row['pembayaran_tenor']; ?>" />
                         <div class="row">
                             <div class="col-sm-12">
                                 <img src="<?= base_url() ?>/upload/<?= $row['pembayaran_bukti']; ?>" alt="Img" width="100%">

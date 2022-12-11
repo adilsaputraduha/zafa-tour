@@ -38,9 +38,6 @@ CREATE TABLE `tb_booking` (
 
 /*Data for the table `tb_booking` */
 
-insert  into `tb_booking`(`booking_nomor`,`booking_tanggal`,`booking_peserta`,`booking_paket`,`booking_status`,`booking_jenis`,`booking_jumlah`,`booking_total`,`booking_document`,`booking_metode`,`booking_tenor`,`booking_isverif`) values 
-('FP-20221130-421','2022-12-01',3,1,7,1,2,5400000,0,1,3,1);
-
 /*Table structure for table `tb_contact` */
 
 DROP TABLE IF EXISTS `tb_contact`;
@@ -73,7 +70,7 @@ CREATE TABLE `tb_detail_fasilitas` (
   `detail_paket` int(11) DEFAULT NULL,
   `detail_fasilitas` int(11) DEFAULT NULL,
   PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_detail_fasilitas` */
 
@@ -88,7 +85,10 @@ insert  into `tb_detail_fasilitas`(`detail_id`,`detail_paket`,`detail_fasilitas`
 (11,101,1),
 (12,609,1),
 (13,609,2),
-(14,609,3);
+(14,609,3),
+(15,319,1),
+(16,319,2),
+(17,753,1);
 
 /*Table structure for table `tb_detail_syarat` */
 
@@ -99,7 +99,7 @@ CREATE TABLE `tb_detail_syarat` (
   `detail_paket` int(11) DEFAULT NULL,
   `detail_syarat` int(11) DEFAULT NULL,
   PRIMARY KEY (`detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_detail_syarat` */
 
@@ -107,7 +107,9 @@ insert  into `tb_detail_syarat`(`detail_id`,`detail_paket`,`detail_syarat`) valu
 (3,210,1),
 (4,210,2),
 (5,609,1),
-(6,609,2);
+(6,609,2),
+(7,319,2),
+(8,753,1);
 
 /*Table structure for table `tb_document` */
 
@@ -129,7 +131,7 @@ CREATE TABLE `tb_document` (
   `document_foto_paspor` varchar(255) DEFAULT NULL,
   `document_peserta` int(11) DEFAULT NULL,
   PRIMARY KEY (`document_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_document` */
 
@@ -188,12 +190,13 @@ CREATE TABLE `tb_paket` (
   `paket_kuota` int(11) DEFAULT NULL,
   `paket_session` int(11) DEFAULT NULL,
   PRIMARY KEY (`paket_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_paket` */
 
 insert  into `tb_paket`(`paket_id`,`paket_nama`,`paket_deskripsi`,`paket_harga`,`paket_tgl_mulai`,`paket_tgl_selesai`,`paket_kuota`,`paket_session`) values 
-(1,'Paket Hemat Banget','Paket Hemat adalah paket untuk perjalanan umroh anda yang ramah dikantong namun mendapatkan fasilitas yang mewah.',2700000,'2023-01-31','2023-02-28',100,210);
+(1,'Paket Hemat Banget','Paket Hemat adalah paket untuk perjalanan umroh anda yang ramah dikantong namun mendapatkan fasilitas yang mewah.',2700000,'2023-03-01','2023-04-28',100,210),
+(4,'Paket Maret','Lorem ipsum',10000,'2022-12-02','2022-12-02',100,753);
 
 /*Table structure for table `tb_pembayaran` */
 
@@ -208,14 +211,9 @@ CREATE TABLE `tb_pembayaran` (
   `pembayaran_isverif` int(11) DEFAULT NULL,
   `pembayaran_tenor` int(11) DEFAULT NULL,
   PRIMARY KEY (`pembayaran_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_pembayaran` */
-
-insert  into `tb_pembayaran`(`pembayaran_id`,`pembayaran_nomor`,`pembayaran_tanggal`,`pembayaran_bukti`,`pembayaran_bayar`,`pembayaran_isverif`,`pembayaran_tenor`) values 
-(12,'FP-20221130-421','2022-12-01','1669864078_d2e955998be3a170b552.png',2,2,1),
-(13,'FP-20221130-421','2022-12-01','1669865025_cc1d5d7997d5a32deaef.png',2,2,1),
-(14,'FP-20221130-421','2022-12-01','1669865670_0d8b3e5f30d338b18bd9.png',2,1,1);
 
 /*Table structure for table `tb_peserta` */
 
@@ -227,7 +225,7 @@ CREATE TABLE `tb_peserta` (
   `peserta_email` varchar(255) DEFAULT NULL,
   `peserta_password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`peserta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_peserta` */
 
@@ -235,7 +233,8 @@ insert  into `tb_peserta`(`peserta_id`,`peserta_nama`,`peserta_email`,`peserta_p
 (1,'Peserta Satu','pesertasatu@gmail.com','$2a$12$F22fNRCH/iqs2sBG32aIh.ouWlCLh61ZS8gCYjFlQ9lKZ/5ETy5VO'),
 (2,'Peserta Dua','pesertadua@gmail.com','$2y$10$sMjCi2PQQV/UOVy6n7VxJeFrpSnD6j1LN2KD21ybRW2FQZY7zELom'),
 (3,'Peserta Tiga','pesertatiga@gmail.com','$2y$10$fOV3sV/epVtLhtbwhC0R/OrN4sX5G9qGCtEVKv1Kt01KRxJHkJNCS'),
-(4,'Peserta Empat','pesertaempat@gmail.com','$2y$10$zg3gGvqd/lHw8xuAbDNVK..DEQVdgHJM/OHaVyC0Ul1XATkqpafju');
+(4,'Peserta Empat','pesertaempat@gmail.com','$2y$10$zg3gGvqd/lHw8xuAbDNVK..DEQVdgHJM/OHaVyC0Ul1XATkqpafju'),
+(6,'Adil Saputra','adilsaputra@gmail.com','$2y$10$PpWnqb6ZHQnRWEStp0gftex6aLqqvrHCXcwVxsmJMdxIwe01KFsrG');
 
 /*Table structure for table `tb_syarat` */
 

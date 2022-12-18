@@ -23,11 +23,11 @@ class LoginController extends BaseController
         $user = $model->cekLogin($email);
 
         if ($user) {
-            if (password_verify($password, $user['user_password'])) {
-                session()->set('userId', $user['user_id']);
-                session()->set('userNama', $user['user_name']);
-                session()->set('userEmail', $user['user_email']);
-                session()->set('userLevel', $user['user_level']);
+            if (password_verify($password, $user['admin_password'])) {
+                session()->set('userId', $user['admin_id']);
+                session()->set('userNama', $user['admin_name']);
+                session()->set('userEmail', $user['admin_email']);
+                session()->set('userLevel', $user['admin_level']);
                 return redirect()->to('/admin');
             } else {
                 session()->setFlashdata('message', 'Password salah');

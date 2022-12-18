@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Laporan Data User</title>
+    <title>Laporan Data Admin</title>
     <link rel="shortcut icon" href="<?= base_url(); ?>/assets/images/logo.png">
     <style type="text/css">
         .head {
@@ -58,7 +58,7 @@
         </table>
         <table class="head" style="margin-bottom: 20px;">
             <tr>
-                <td>Laporan Data User</td>
+                <td>Laporan Data Admin</td>
             </tr>
         </table>
         <table border="1" class="body" width="700">
@@ -72,17 +72,17 @@
             </thead>
             <tbody>
                 <?php $no = 0;
-                foreach ($user as $row) : $no++ ?>
+                foreach ($admin as $row) : $no++ ?>
                     <tr style="height: 20px; text-align: center;">
                         <td> <?= $no; ?></td>
-                        <td> <?= $row['user_email']; ?></td>
-                        <td> <?= $row['user_name']; ?></td>
+                        <td> <?= $row['admin_email']; ?></td>
+                        <td> <?= $row['admin_name']; ?></td>
                         <td>
-                            <?php if ($row['user_level'] == 1) { ?>
+                            <?php if ($row['admin_level'] == 1) { ?>
                                 Admin
-                            <?php } else if ($row['user_level'] == 0) { ?>
+                            <?php } else if ($row['admin_level'] == 0) { ?>
                                 Super Admin
-                            <?php } else if ($row['user_level'] == 2) { ?>
+                            <?php } else if ($row['admin_level'] == 2) { ?>
                                 Pimpinan
                             <?php } ?>
                         </td>

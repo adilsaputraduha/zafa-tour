@@ -23,9 +23,9 @@
             <ul class="nav nav-treeview ">
                 <?php if (session()->get('userLevel') == 0) { ?>
                     <li class="nav-item">
-                        <a href="<?= base_url('admin/user'); ?>" class="nav-link">
+                        <a href="<?= base_url('admin/admin'); ?>" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>User</p>
+                            <p>Admin</p>
                         </a>
                     </li>
                 <?php } ?>

@@ -2,25 +2,25 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\AdminModel;
 
-class UserController extends BaseController
+class AdminController extends BaseController
 {
     public function index()
     {
-        $model = new UserModel();
+        $model = new AdminModel();
         $data = [
-            'user' => $model->getUser()->getResultArray(),
+            'admin' => $model->getAdmin()->getResultArray(),
             'validation' => \Config\Services::validation()
         ];
-        echo view('view_user', $data);
+        echo view('view_admin', $data);
     }
 
     public function save()
     {
         $rules = [
             'email' => [
-                'rules' => 'required|max_length[100]|is_unique[tb_user.user_email]',
+                'rules' => 'required|max_length[100]|is_unique[tb_admin.admin_email]',
                 'errors' => [
                     'is_unique' => 'Email sudah ada',
                     'required' => 'Email harus diisi',
@@ -51,19 +51,19 @@ class UserController extends BaseController
         ];
 
         if ($this->validate($rules)) {
-            $model = new UserModel();
+            $model = new AdminModel();
             $data = array(
-                'user_email' => $this->request->getPost('email'),
-                'user_name' => $this->request->getPost('nama'),
-                'user_password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                'user_level' => $this->request->getPost('level')
+                'admin_email' => $this->request->getPost('email'),
+                'admin_name' => $this->request->getPost('nama'),
+                'admin_password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+                'admin_level' => $this->request->getPost('level')
             );
-            $model->saveUser($data);
+            $model->saveAdmin($data);
             session()->setFlashdata('success', 'Berhasil menyimpan data');
-            return redirect()->to('admin/user');
+            return redirect()->to('admin/admin');
         } else {
             $validation = \Config\Services::validation();
-            return redirect()->to('admin/user')->withInput()->with('validation', $validation);
+            return redirect()->to('admin/admin')->withInput()->with('validation', $validation);
         }
     }
 
@@ -88,33 +88,33 @@ class UserController extends BaseController
         $id = $this->request->getPost('id');
 
         if ($this->validate($rules)) {
-            $model = new UserModel();
+            $model = new AdminModel();
             $data = array(
-                'user_name' => $this->request->getPost('nama'),
-                'user_level' => $this->request->getPost('level')
+                'admin_name' => $this->request->getPost('nama'),
+                'admin_level' => $this->request->getPost('level')
             );
-            $model->updateUser($data, $id);
+            $model->updateAdmin($data, $id);
             session()->setFlashdata('success', 'Berhasil mengedit data');
-            return redirect()->to('/admin/user');
+            return redirect()->to('/admin/admin');
         } else {
             $validation = \Config\Services::validation();
-            return redirect()->to('/admin/user' . $id)->withInput()->with('validation', $validation);
+            return redirect()->to('/admin/admin' . $id)->withInput()->with('validation', $validation);
         }
     }
 
     public function delete()
     {
-        $model = new UserModel();
+        $model = new AdminModel();
         $id = $this->request->getPost('id');
-        $model->deleteUser($id);
+        $model->deleteAdmin($id);
         session()->setFlashdata('success', 'Berhasil menghapus data');
-        return redirect()->to('/user');
+        return redirect()->to('/admin');
     }
 
     public function report()
     {
-        $model = new UserModel();
-        $data['user'] = $model->getUser()->getResultArray();
-        echo view('report/report_user', $data);
+        $model = new AdminModel();
+        $data['admin'] = $model->getAdmin()->getResultArray();
+        echo view('report/report_admin', $data);
     }
 }

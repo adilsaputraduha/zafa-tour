@@ -23,9 +23,9 @@
             <ul class="nav nav-treeview ">
                 <?php if (session()->get('userLevel') == 0) { ?>
                     <li class="nav-item">
-                        <a href="<?= base_url('admin/user'); ?>" class="nav-link active">
+                        <a href="<?= base_url('admin/admin'); ?>" class="nav-link active">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>User</p>
+                            <p>Admin</p>
                         </a>
                     </li>
                 <?php } ?>
@@ -148,7 +148,7 @@
             <div class="col-sm-12">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">Master</li>
-                    <li class="breadcrumb-item active">User</li>
+                    <li class="breadcrumb-item active">Admin</li>
                 </ol>
             </div>
         </div>
@@ -188,23 +188,23 @@
                 </thead>
                 <tbody>
                     <?php $no = 0;
-                    foreach ($user as $row) : $no++ ?>
+                    foreach ($admin as $row) : $no++ ?>
                         <tr>
                             <td> <?= $no; ?></td>
-                            <td> <?= $row['user_email']; ?></td>
-                            <td> <?= $row['user_name']; ?></td>
+                            <td> <?= $row['admin_email']; ?></td>
+                            <td> <?= $row['admin_name']; ?></td>
                             <td>
-                                <?php if ($row['user_level'] == 1) { ?>
+                                <?php if ($row['admin_level'] == 1) { ?>
                                     <span class="badge bg-primary">Admin</span>
-                                <?php } else if ($row['user_level'] == 0) { ?>
+                                <?php } else if ($row['admin_level'] == 0) { ?>
                                     <span class="badge bg-info">Super Admin</span>
                                 <?php } else { ?>
                                     <span class="badge bg-success">Pimpinan</span>
                                 <?php } ?>
                             </td>
                             <td style="text-align: center;">
-                                <a type="button" class="badge bg-warning pointer" data-toggle="modal" data-target="#updateModal<?= $row['user_id']; ?>">Edit</a>
-                                <a type="button" class="badge bg-danger" data-toggle="modal" data-target="#deleteModal<?= $row['user_id']; ?>">Hapus</a>
+                                <a type="button" class="badge bg-warning pointer" data-toggle="modal" data-target="#updateModal<?= $row['admin_id']; ?>">Edit</a>
+                                <a type="button" class="badge bg-danger" data-toggle="modal" data-target="#deleteModal<?= $row['admin_id']; ?>">Hapus</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -219,12 +219,12 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title" id="">Tambah user</h6>
+                <h6 class="modal-title" id="">Tambah admin</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('admin/user/save'); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?= base_url('admin/admin/save'); ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field(); ?>
                 <div class="modal-body">
                     <div class="row">
@@ -281,25 +281,25 @@
     </div>
 </div>
 
-<?php foreach ($user as $row) : ?>
-    <div id="updateModal<?= $row['user_id']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
+<?php foreach ($admin as $row) : ?>
+    <div id="updateModal<?= $row['admin_id']; ?>" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="">Update user</h6>
+                    <h6 class="modal-title" id="">Update admin</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url('admin/user/edit'); ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?= base_url('admin/admin/edit'); ?>" method="POST" enctype="multipart/form-data">
                     <?= csrf_field(); ?>
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="id" value="<?= $row['user_id']; ?>">
+                        <input type="hidden" name="id" id="id" value="<?= $row['admin_id']; ?>">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" readonly class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?= $row['user_email']; ?>" required placeholder="Masukan email">
+                                    <input type="email" readonly class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?= $row['admin_email']; ?>" required placeholder="Masukan email">
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('email'); ?>
                                     </div>
@@ -308,7 +308,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" id="nama" name="nama" value="<?= $row['user_name']; ?>" required placeholder="Masukan nama">
+                                    <input type="text" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" id="nama" name="nama" value="<?= $row['admin_name']; ?>" required placeholder="Masukan nama">
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('nama'); ?>
                                     </div>
@@ -318,11 +318,11 @@
                                 <div class="form-group">
                                     <label>Level</label>
                                     <select name="level" id="level" required class="form-control <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>">
-                                        <?php if ($row['user_level'] == 1) { ?>
+                                        <?php if ($row['admin_level'] == 1) { ?>
                                             <option selected value="1">Admin</option>
                                             <option value="0">Super Admin</option>
                                             <option value="2">Pimpinan</option>
-                                        <?php } else if ($row['user_level'] == 0) { ?>
+                                        <?php } else if ($row['admin_level'] == 0) { ?>
                                             <option selected value="0">Super Admin</option>
                                             <option value="1">Admin</option>
                                             <option value="2">Pimpinan</option>
@@ -350,19 +350,19 @@
         </div>
     </div>
 
-    <form action="<?= base_url('admin/user/delete'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('admin/admin/delete'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
-        <div class="modal" tabindex="-1" id="deleteModal<?= $row['user_id']; ?>">
+        <div class="modal" tabindex="-1" id="deleteModal<?= $row['admin_id']; ?>">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Hapus user</h5>
+                        <h5 class="modal-title">Hapus admin</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="id" required value="<?= $row['user_id']; ?>" />
+                        <input type="hidden" name="id" required value="<?= $row['admin_id']; ?>" />
                         <h6>Yakin ingin menghapus data ini?</h6>
                     </div>
                     <div class="modal-footer">

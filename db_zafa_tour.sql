@@ -39,6 +39,9 @@ CREATE TABLE `tb_booking` (
 
 /*Data for the table `tb_booking` */
 
+insert  into `tb_booking`(`booking_nomor`,`booking_tanggal`,`booking_peserta`,`booking_paket`,`booking_status`,`booking_jenis`,`booking_jumlah`,`booking_total`,`booking_document`,`booking_metode`,`booking_tenor`,`booking_isverif`,`booking_cicilanke`) values 
+('FP-20221216-955','2022-12-16',6,1,9,1,3,8100000,1,0,1,1,0);
+
 /*Table structure for table `tb_contact` */
 
 DROP TABLE IF EXISTS `tb_contact`;
@@ -132,9 +135,14 @@ CREATE TABLE `tb_document` (
   `document_foto_paspor` varchar(255) DEFAULT NULL,
   `document_peserta` int(11) DEFAULT NULL,
   PRIMARY KEY (`document_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_document` */
+
+insert  into `tb_document`(`document_id`,`document_booking`,`document_nik`,`document_nama`,`document_alamat`,`document_tempat_lahir`,`document_tgl_lahir`,`document_notelp`,`document_kelamin`,`document_no_paspor`,`document_tgl_berlaku`,`document_foto_ktp`,`document_foto_paspor`,`document_peserta`) values 
+(11,'FP-20221216-955','1234567891234567','Adil','Jalan Padang','Padang','2001-02-28','95935938593',1,'242242','2022-12-16','1671202449_98237f521d67998a5dee.png','1671202449_131ae2861034131f75b6.png',1),
+(12,'FP-20221216-955','1234567891234567','Saputra','Jalan Padang','Padang','2001-02-14','02850285985',1,'5535353','2022-12-16','1671202513_bbd05efc779980997009.png','1671202513_d86a219639ba94c695a5.png',2),
+(13,'FP-20221216-955','1234567891234567','Saputra 2','Jalan Padang','Padang','2001-02-14','02850285985',1,'5535353','2022-12-16','1671202513_bbd05efc779980997009.png','1671202513_d86a219639ba94c695a5.png',3);
 
 /*Table structure for table `tb_faq` */
 
@@ -197,7 +205,7 @@ CREATE TABLE `tb_paket` (
 
 insert  into `tb_paket`(`paket_id`,`paket_nama`,`paket_deskripsi`,`paket_harga`,`paket_tgl_mulai`,`paket_tgl_selesai`,`paket_kuota`,`paket_session`) values 
 (1,'Paket Hemat Banget','Paket Hemat adalah paket untuk perjalanan umroh anda yang ramah dikantong namun mendapatkan fasilitas yang mewah.',2700000,'2023-03-01','2023-04-28',100,210),
-(4,'Paket Maret','Lorem ipsum',10000,'2022-12-02','2022-12-02',100,753);
+(4,'Paket Maret','Lorem ipsum',10000,'2023-06-14','2023-10-03',100,753);
 
 /*Table structure for table `tb_pembayaran` */
 
@@ -212,9 +220,13 @@ CREATE TABLE `tb_pembayaran` (
   `pembayaran_isverif` int(11) DEFAULT NULL,
   `pembayaran_tenor` int(11) DEFAULT NULL,
   PRIMARY KEY (`pembayaran_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `tb_pembayaran` */
+
+insert  into `tb_pembayaran`(`pembayaran_id`,`pembayaran_nomor`,`pembayaran_tanggal`,`pembayaran_bukti`,`pembayaran_bayar`,`pembayaran_isverif`,`pembayaran_tenor`) values 
+(32,'FP-20221216-955','2022-12-16','1671202196_114f7a2c99805817f78a.png',0,1,NULL),
+(33,'FP-20221216-955','2022-12-16','1671202245_5322a98ba66fc4234a58.png',1,1,NULL);
 
 /*Table structure for table `tb_peserta` */
 

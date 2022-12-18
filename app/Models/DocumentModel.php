@@ -26,4 +26,9 @@ class DocumentModel extends Model
         $query = $this->db->table('tb_document')->delete(array('document_id' => $id));
         return $query;
     }
+    public function updateDocumentBooking($data, $id, $idnota)
+    {
+        $query = $this->db->table('tb_document')->update($data, array('document_id' => $id, 'document_booking' => $idnota));
+        return $query;
+    }
 }

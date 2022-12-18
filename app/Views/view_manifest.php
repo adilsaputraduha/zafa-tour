@@ -23,9 +23,9 @@
             <ul class="nav nav-treeview ">
                 <?php if (session()->get('userLevel') == 0) { ?>
                     <li class="nav-item">
-                        <a href="<?= base_url('admin/user'); ?>" class="nav-link">
+                        <a href="<?= base_url('admin/admin'); ?>" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>User</p>
+                            <p>Admin</p>
                         </a>
                     </li>
                 <?php } ?>
@@ -250,6 +250,14 @@
                         <input type="hidden" name="idnota" required value="<?= $row['document_booking']; ?>" />
                         <input type="hidden" name="peserta" required value="<?= $row['booking_peserta']; ?>" />
                         <input type="hidden" name="jumlahbooking" required value="<?= $row['booking_jumlah']; ?>" />
+                        <input type="hidden" name="bookingstatus" required value="<?= $row['booking_status']; ?>" />
+                        <input type="hidden" name="bookingmetode" required value="<?= $row['booking_metode']; ?>" />
+                        <input type="hidden" name="bookingtenor" required value="<?= $row['booking_tenor']; ?>" />
+                        <input type="hidden" name="bookingverif" required value="<?= $row['booking_isverif']; ?>" />
+                        <input type="hidden" name="bookingcicilan" required value="<?= $row['booking_cicilanke']; ?>" />
+                        <input type="hidden" name="bookingtotal" required value="<?= $row['booking_total']; ?>" />
+                        <input type="hidden" name="bookingpaket" required value="<?= $row['booking_paket']; ?>" />
+                        <input type="hidden" name="dokumenpeserta" required value="<?= $row['document_peserta']; ?>" />
                         <div class="row">
                             <div class="col-sm-12 mt-4">
                                 <label class="text-danger" for="">Peserta akan didaftarkan pada paket yang dipilih</label>

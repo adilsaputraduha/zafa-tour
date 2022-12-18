@@ -67,12 +67,12 @@ $routes->get('/admin', 'HomeController::index', ['filter' => 'auth']);
 $routes->get('/admin/login', 'LoginController::index');
 $routes->post('/admin/login/ceklogin', 'LoginController::ceklogin');
 $routes->get('/admin/logout', 'LoginController::logout', ['filter' => 'auth']);
-// User
-$routes->get('/admin/user', 'UserController::index', ['filter' => 'auth']);
-$routes->post('/admin/user/save', 'UserController::save', ['filter' => 'auth']);
-$routes->post('/admin/user/edit', 'UserController::edit', ['filter' => 'auth']);
-$routes->post('/admin/user/delete', 'UserController::delete', ['filter' => 'auth']);
-$routes->get('/admin/user/report', 'UserController::report', ['filter' => 'auth']);
+// Admin
+$routes->get('/admin/admin', 'AdminController::index', ['filter' => 'auth']);
+$routes->post('/admin/admin/save', 'AdminController::save', ['filter' => 'auth']);
+$routes->post('/admin/admin/edit', 'AdminController::edit', ['filter' => 'auth']);
+$routes->post('/admin/admin/delete', 'AdminController::delete', ['filter' => 'auth']);
+$routes->get('/admin/admin/report', 'AdminController::report', ['filter' => 'auth']);
 // Peserta
 $routes->get('/admin/peserta', 'PesertaController::index', ['filter' => 'auth']);
 $routes->post('/admin/peserta/save', 'PesertaController::save', ['filter' => 'auth']);
